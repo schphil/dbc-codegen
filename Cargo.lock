@@ -102,8 +102,7 @@ dependencies = [
 [[package]]
 name = "can-dbc"
 version = "5.0.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9c2d32f0a7f3754502f84cb68e493a6765ce0978348a59efcb1bccf2ee19c255"
+source = "git+https://github.com/schphil/can-dbc.git?branch=dbc-id-mask#5d0ab359df0663fa0df759feb6a858cf3fb9d70e"
 dependencies = [
  "derive-getters",
  "nom 7.1.3",

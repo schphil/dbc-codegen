@@ -34,3 +34,6 @@ members = [
 # Indicates features that docs.rs should enable when building documentation.
 [package.metadata.docs.rs]
 features = ["std"]
+
+[patch.crates-io]
+can-dbc = { git = "https://github.com/schphil/can-dbc.git", branch = "dbc-id-mask" }
