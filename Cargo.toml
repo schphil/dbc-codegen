@@ -17,7 +17,7 @@ homepage = "https://github.com/technocreatives/dbc-codegen"
 std = []
 
 [dependencies]
-can-dbc = "5.0.0"
+can-dbc = { git = "https://github.com/schphil/can-dbc.git", branch = "dbc-id-mask" }
 anyhow = "1.0.68"
 heck = "0.4.0"
 
@@ -34,6 +34,3 @@ members = [
 # Indicates features that docs.rs should enable when building documentation.
 [package.metadata.docs.rs]
 features = ["std"]
-
-[patch.crates-io]
-can-dbc = { git = "https://github.com/schphil/can-dbc.git", branch = "dbc-id-mask" }
