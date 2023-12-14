@@ -55,6 +55,9 @@ pub fn codegen(dbc_name: &str, dbc_content: &[u8], out: impl Write, debug: bool)
     writeln!(w, r##"#[cfg(feature = "arb")]"##)?;
     writeln!(&mut w, "use arbitrary::{{Arbitrary, Unstructured}};")?;
     writeln!(&mut w)?;
+    writeln!(&mut w, "use crate::util::can::CanFrame;")?;
+    writeln!(&mut w, "use r#macro::FromMessageForCanFrame;")?;
+    writeln!(&mut w)?;
 
     render_dbc(&mut w, &dbc).context("could not generate Rust code")?;
 
