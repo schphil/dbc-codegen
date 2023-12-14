@@ -148,7 +148,7 @@ fn render_message(mut w: impl Write, msg: &Message, dbc: &DBC) -> Result<()> {
             writeln!(w, "/// {}", line)?;
         }
     }
-    writeln!(w, "#[derive(Clone, Copy)]")?;
+    writeln!(w, "#[derive(Clone, Copy, FromMessageForCanFrame)]")?;
     writeln!(w, "pub struct {} {{", type_name(msg.message_name()))?;
     {
         let mut w = PadAdapter::wrap(&mut w);
