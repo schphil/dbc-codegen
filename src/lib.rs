@@ -244,7 +244,11 @@ fn render_message(mut w: impl Write, msg: &Message, dbc: &DBC) -> Result<()> {
         writeln!(w)?;
 
         writeln!(&mut w, "/// Access message payload raw value")?;
-        writeln!(&mut w, "pub fn raw(&self) -> &[u8; {}] {{", msg.message_size())?;
+        writeln!(
+            &mut w,
+            "pub fn raw(&self) -> &[u8; {}] {{",
+            msg.message_size()
+        )?;
         {
             let mut w = PadAdapter::wrap(&mut w);
             writeln!(&mut w, "&self.raw")?;
@@ -843,6 +847,45 @@ fn write_enum(
     }
     writeln!(w, "}}")?;
     writeln!(w)?;
+
+    writeln!(w, "impl From<{signal_rust_type}> for {type_name} {{")?;
+    {
+        let match_on_raw_type = match signal_to_rust_type(signal).as_str() {
+            "bool" => |x: f64| format!("{}", (x as i64) == 1),
+            "f32" => |x: f64| format!("{}_f32", x),
+            _ => |x: f64| format!("{}", x as i64),
+        };
+
+        let mut w = PadAdapter::wrap(&mut w);
+
+        let mut w = PadAdapter::wrap(&mut w);
+        writeln!(w, "fn from(val: {signal_rust_type}) -> {type_name} {{")?;
+        {
+            let mut w = PadAdapter::wrap(&mut w);
+
+            writeln!(&mut w, "match val {{")?;
+            {
+                let mut w = PadAdapter::wrap(&mut w);
+                for variant in variants {
+                    let literal = match_on_raw_type(*variant.a());
+                    writeln!(
+                        &mut w,
+                        "{} => {}::{},",
+                        literal,
+                        type_name,
+                        enum_variant_name(variant.b()),
+                    )?;
+                }
+                writeln!(&mut w, "x => {}::_Other(x)", type_name,)?;
+            }
+            writeln!(w, "}}")?;
+        }
+        writeln!(w, "}}")?;
+    }
+
+    writeln!(w, "}}")?;
+    writeln!(w)?;
+
     Ok(())
 }
 
