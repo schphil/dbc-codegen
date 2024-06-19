@@ -983,7 +983,7 @@ fn multiplex_enum_name(msg: &Message, multiplexor: &Signal) -> Result<String> {
         multiplexor
     );
     Ok(format!(
-        "{}{}",
+        "{}{}Mx",
         msg.message_name().to_pascal_case(),
         multiplexor.name().to_pascal_case()
     ))
